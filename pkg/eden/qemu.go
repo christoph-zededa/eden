@@ -176,7 +176,7 @@ func StartEVEQemu(qemuARCH, qemuOS, eveImageFile, imageFormat string, isInstalle
 		// (with "eden eve stop && eden eve start)
 	}
 
-	consoleOps := "-display none "
+	consoleOps := "-vnc :5 "
 	consoleOps += fmt.Sprintf("-serial chardev:char0 -chardev socket,id=char0,port=%d,"+
 		"host=localhost,server,nodelay,nowait,telnet,logappend=on,logfile=%s ",
 		eveTelnetPort, logFile)
