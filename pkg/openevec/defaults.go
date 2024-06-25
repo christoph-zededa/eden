@@ -28,6 +28,7 @@ func GetDefaultConfig() *EdenSetupArgs {
 				Force: false,
 				Tag:   defaults.DefaultEServerTag,
 			},
+			TestTimeDilation: 1.0,
 		},
 
 		Adam: AdamConfig{

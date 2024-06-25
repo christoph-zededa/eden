@@ -717,13 +717,13 @@ func (ts *TestScript) buildExecCmd(command string, args ...string) (context.Cont
 		}
 		command = lp
 	}
-	if timewait == 0 {
+	if timewait.Duration() == 0 {
 		//ts.ctxt = context.Background()
 		return ts.ctxt, exec.Command(command, args...), nil, nil
 	}
 	//ts.ctxt, _ = context.WithTimeout(context.Background(), timewait)
 	//return exec.CommandContext(ts.ctxt, command, args...), nil
-	ctx, cancelFunc := context.WithTimeout(ts.ctxt, timewait)
+	ctx, cancelFunc := context.WithTimeout(ts.ctxt, timewait.Duration())
 	return ctx, exec.CommandContext(ctx, command, args...), cancelFunc, nil
 }
 

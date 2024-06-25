@@ -61,6 +61,7 @@ func InitVarsFromConfig(cfg *EdenSetupArgs) (*utils.ConfigVars, error) {
 	cv.EServerImageDist = utils.ResolveAbsPath(cfg.Eden.Images.EServerImageDist)
 	cv.EServerPort = strconv.Itoa(cfg.Eden.EServer.Port)
 	cv.EServerIP = cfg.Eden.EServer.IP
+	cv.ExecCmdTimeDilation = cfg.Eden.TestTimeDilation
 
 	cv.EveCert = utils.ResolveAbsPath(cfg.Eve.Cert)
 	cv.EveDeviceCert = utils.ResolveAbsPath(cfg.Eve.DeviceCert)

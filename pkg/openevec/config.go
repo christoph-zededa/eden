@@ -28,15 +28,17 @@ type ImagesConfig struct {
 }
 
 type EdenConfig struct {
-	Download     bool   `mapstructure:"download" cobraflag:"download"`
-	BinDir       string `mapstructure:"bin-dist" cobraflag:"bin-dist" resolvepath:""`
-	CertsDir     string `mapstructure:"certs-dist" cobraflag:"certs-dist" resolvepath:""`
-	Dist         string `mapstructure:"dist"`
-	Root         string `mapstructure:"root"`
-	SSHKey       string `mapstructure:"ssh-key" cobraflag:"ssh-key" resolvepath:""`
-	EdenBin      string `mapstructure:"eden-bin"`
-	TestBin      string `mapstructure:"test-bin"`
-	TestScenario string `mapstructure:"test-scenario"`
+	Download bool   `mapstructure:"download" cobraflag:"download"`
+	BinDir   string `mapstructure:"bin-dist" cobraflag:"bin-dist" resolvepath:""`
+	CertsDir string `mapstructure:"certs-dist" cobraflag:"certs-dist" resolvepath:""`
+	Dist     string `mapstructure:"dist"`
+	Root     string `mapstructure:"root"`
+	SSHKey   string `mapstructure:"ssh-key" cobraflag:"ssh-key" resolvepath:""`
+	EdenBin  string `mapstructure:"eden-bin"`
+
+	TestBin          string  `mapstructure:"test-bin"`
+	TestScenario     string  `mapstructure:"test-scenario"`
+	TestTimeDilation float32 `mapstructure:"test-time-dilation"`
 
 	EServer EServerConfig `mapstructure:"eserver"`
 

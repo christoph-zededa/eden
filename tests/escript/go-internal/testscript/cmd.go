@@ -53,8 +53,39 @@ var scriptCmds = map[string]func(*TestScript, bool, []string){
 	"wait":    (*TestScript).cmdWait,
 }
 
-var timewait time.Duration
 var backgroundSpecifier = regexp.MustCompile(`^&(\w+&)?$`)
+
+var configVars *utils.ConfigVars
+
+func init() {
+	var err error
+	configVars, err = utils.InitVars()
+	if err != nil {
+		panic(err)
+	}
+}
+
+var timewait timew
+
+type timew struct {
+	timewait time.Duration
+}
+
+func (t timew) Duration() time.Duration {
+	return t.timewait
+}
+
+func (t timew) String() string {
+	return t.timewait.String()
+}
+
+func (t *timew) set(duration time.Duration) {
+	configVars.ExecCmdTimeDilation = 13
+	dilatedDuration := float64(configVars.ExecCmdTimeDilation) * float64(duration)
+
+	t.timewait = time.Duration(dilatedDuration)
+	fmt.Printf("AAAAAA timewait set to %s\n", t.timewait)
+}
 
 // cd changes to a different directory.
 func (ts *TestScript) cmdCd(neg bool, args []string) {
@@ -275,13 +306,12 @@ func (ts *TestScript) cmdEden(neg bool, args []string) {
 
 	// timewait
 	if len(args) > 0 && args[0] == "-t" {
-		timewait, err = time.ParseDuration(args[1])
+		timeduration, err := time.ParseDuration(args[1])
+		timewait.set(timeduration)
 		if err != nil {
 			ts.Fatalf("Incorrect time format in 'eden': %s\n", err)
 		}
 		args = args[2:]
-	} else {
-		timewait = 0
 	}
 	fmt.Printf("edenProg: %s timewait: %s\n", edenProg, timewait)
 
@@ -327,13 +357,12 @@ func (ts *TestScript) cmdTest(neg bool, args []string) {
 
 	// timewait
 	if len(args) > 0 && args[0] == "-t" {
-		timewait, err = time.ParseDuration(args[1])
+		timeduration, err := time.ParseDuration(args[1])
+		timewait.set(timeduration)
 		if err != nil {
 			ts.Fatalf("Incorrect time format in 'test': %s\n", err)
 		}
 		args = args[2:]
-	} else {
-		timewait = 0
 	}
 
 	testProg := utils.ResolveAbsPath(vars.EdenBinDir + "/" + args[0])
@@ -452,13 +481,12 @@ func (ts *TestScript) cmdExec(neg bool, args []string) {
 
 	var err error
 	if len(args) > 0 && args[0] == "-t" {
-		timewait, err = time.ParseDuration(args[1])
+		timeduration, err := time.ParseDuration(args[1])
+		timewait.set(timeduration)
 		if err != nil {
 			ts.Fatalf("Incorrect time format in 'exec': %s\n", err)
 		}
 		args = args[2:]
-	} else {
-		timewait = 0
 	}
 	fmt.Printf("exec timewait: %s\n", timewait)
 
