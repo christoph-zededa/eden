@@ -104,7 +104,7 @@ func (cloud *CloudCtx) OnBoardDev(node *device.Ctx) error {
 		return fmt.Errorf("register: %s", err)
 	}
 
-	maxRepeat := 20
+	maxRepeat := 200
 	delayTime := 20 * time.Second
 
 	for i := 0; i < maxRepeat; i++ {
