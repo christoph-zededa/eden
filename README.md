@@ -1,3 +1,4 @@
+TEST
 # Eden
 
 Eden is the simplest way to setup & test [EVE](https://github.com/lf-edge/eve)
